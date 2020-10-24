@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node *front = NULL;
+struct node *rear = NULL;
+
+
+void enqueue(int value)
+{
+    struct node *pNew = (struct node *)malloc(sizeof(struct node));
+    pNew->data = value;
+    pNew->next = NULL;
+
+    if (front == NULL && rear == NULL)
+    {
+        front = rear = pNew;
+    }
+    else
+    {
+        rear->next = pNew;
+        rear = pNew;
+    }
+}
+void dequeuefront()
+{
+    struct node *node2delete;
+    node2delete=front;
+    if (front == NULL && rear == NULL)
+        printf("\nQueue is Empty");
+
+          else if(front==rear)
+     {
+       printf("QUEUE IS EMPTY");
+     }
+
+    else
+    {
+        printf("%d was deleted", front->data);
+        front = front->next;
+        free(node2delete);
+    }
+}
+void dequeuerear()
+{
+    struct node *help_ptr, *node2delete;
+    node2delete=rear;
+    help_ptr=front;
+    if (front == NULL && rear == NULL)
+        printf("\nQueue is Empty");
+     
+     else if(front==rear)
+     {
+       printf("QUEUE IS EMPTY");
+     }
+    else
+    {
+        printf("%d was deleted", rear->data);
+        while(help_ptr->next!=rear)
+            help_ptr=help_ptr->next;
+        rear=help_ptr;
+        help_ptr->next=NULL;
+        free(node2delete);
+    }
+}
+void display()
+{
+    if (front == NULL && rear == NULL)
+        printf("\nQueue is Empty");
+
+    else
+    {
+        struct node* help_ptr;
+        help_ptr = front;
+        while (help_ptr != NULL)
+        {
+            printf("%4d", help_ptr->data);
+            help_ptr = help_ptr->next;
+        }
+    }
+}
+
+int main()
+{
+    int choice, number;  
+    do
+    {
+        printf("\n1.ENQUE ");
+        printf("\n2.DEQUEUE FROM FRONT");
+        printf("\n3.DEQUEUE FROM REAR");
+        printf("\n4.DISPLAY");
+        printf("\n5.EXIT");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            printf("Enter the number: ");
+            scanf("%d", &number);
+            enqueue(number);
+            break;
+
+
+
+        case 2:
+            dequeuefront();
+            break;
+
+        case 3:
+            dequeuerear();
+            break;
+
+        case 4:
+            display();
+            break;
+            
+        
+
+        default:
+            printf("\nINVALID ");
+            break;
+        }
+    }while(choice!=5);
+}
+
+
